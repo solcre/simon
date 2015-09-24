@@ -11,11 +11,19 @@
 <!-- SIMON script async loading -->
 <script type="application/javascript">
 
+    getEntryByTestpoint = function(ip) {
+        entries = performance.getEntries();
+        for(e in entries) {
+            entry = entries[e];
+            if(entry["name"].indexOf(ip) > 0) return entry;
+        }
+    };
+
     (function (d, s) {
         var js = d.createElement(s),
                 sc = d.getElementsByTagName(s)[0];
 
-        js.src = "http://127.0.0.1:8000/simon/static/simon_app/js/simon_probe_plugin.js";//http://simon.lacnic.net/simon/static/simon_app/js/simon_probe_plugin.js";
+        js.src = "http://simon.lacnic.net/simon/static/simon_app/js/simon_probe_plugin.js";//http://simon.lacnic.net/simon/static/simon_app/js/simon_probe_plugin.js";
         js.type = "text/javascript";
         sc.parentNode.insertBefore(js, sc);
 
@@ -24,13 +32,14 @@
 
             SIMON.after_points = function () {
                 var testPoint = {
-                    "ip": '200.3.14.147',
+                    "ip": '190.12.32.12',
                     "url": 'prueba-001',
                     "country": 'UY',
                     "countryName": 'Uruguay',
                     "city": 'Montevideo',
                     "region": 'S-A',
                     "results": [],
+                    "results_webtimingapi" : [],
                     "throughputResults": [],
                     "online": false,
                     "onlineFinished": false
@@ -45,11 +54,17 @@
             SIMON.after_end = function() {
                 for(t in SIMON.points) {
                     cur_html = $("#output").html();
-                    $("#output").html(cur_html + SIMON.points[t].results + "<br>");
-                }
-            }
 
-            SIMON.params.numTests = 1000;
+                    SIMON.log(SIMON.points[t].results);
+                    SIMON.log(getEntryByTestpoint(SIMON.points[0].ip).duration);
+
+                }
+            };
+
+            SIMON.params.numTests = 10;
+
+            api = performance.timing;
+            $("#output").html(api.connectEnd - api.connectStart + "<br>");
 
             SIMON.init();
         };
