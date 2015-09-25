@@ -48,6 +48,9 @@ class Command(BaseCommand):
 
                 print "\rGET: %.0f ms \t HEAD: %.0f \t (%s)" % (numpy.average(gets), numpy.average(heads), tp.speedtest_url)
 
+                print gets
+                print heads
+
             except KeyboardInterrupt:
                 raise
             except:
