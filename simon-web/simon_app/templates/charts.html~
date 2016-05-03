@@ -221,9 +221,6 @@
                 <h4>Matriz de latencias <code>ICMP</code></h4>
                 <img class="center-block" src="{% static 'simon_app/imgs/heatmap-icmp.png' %}" style="max-width: 100%">
             </div>
- <div class="col-lg-4">
-                <h4>Matriz de latencias <code>por ASN</code></h4>
-            </div>
 
         </div>
 
